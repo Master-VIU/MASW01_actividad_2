@@ -16,13 +16,13 @@ class User extends Model
 
     protected $fillable = [
         'user_id',
-        'nombre',
-        'apellidos',
+        'name',
+        'surnames',
         'dni',
         'email',
-        'telefono',
-        'pais',
-        'sobre_ti'
+        'phone',
+        'country',
+        'over_you'
     ];
 
     protected $hidden = [
