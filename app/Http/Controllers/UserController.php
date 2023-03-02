@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Validator;
 
 class UserController extends Controller
 {
 
     protected $users;
 
-        public function __construct(User $users){
-            $this->users = $users;
-        }
+    public function __construct(User $users)
+    {
+        $this->users = $users;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +26,7 @@ class UserController extends Controller
     {
         //users = $this->users->getUsers();
         $users = User::all();
-         return response()->json($users);
+        return response()->json($users);
     }
 
     /**
@@ -44,19 +47,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:2|max:20',
+            'surnames' => 'required|min:2|max:40|alpha',
+            'dni' => 'required|max:9',
+            'email' => 'required|regex:/^.+@.+$/i|unique:users',
+            'password' => 'required:min:8|alpha_num',
+            'confirmPassword' => 'required|same:password',
+            'phone' => 'min:9|max:12',
+            'country' => 'alpha',
+            'iban' => 'required',
+            'overYou' => 'min:20|max:250|alpha'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('users/error')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         $user = new User;
-        $user->nombre = $request->nombre;
-        $user->apellidos = $request->apellidos;
+        $user->name = $request->get('name');
+        $user->surnames = $request->surnames;
         $user->dni = $request->dni;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->telefono = $request->telefono;
-        $user->pais = $request->pais;
+        $user->phone = $request->phone;
+        $user->country = $request->country;
         $user->iban = $request->iban;
-        $user->sobre_ti = $request->sobre_ti;
+        $user->over_you = $request->overYou;
         $user->save();
 
-       return back();
+        //return back();
+        return redirect()->route('users.create')->with('success', 'Usuario creado correctamente');
     }
 
     /**
