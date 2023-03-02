@@ -18,13 +18,13 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'nombre' => 'seguridad',
-            'apellidos' => 'web',
+            'name' => 'seguridad',
+            'surnames' => 'web',
             'dni' => '09637181C',
             'email' => 'seguridadweb' . '@campusviu.es',
             'password' => Hash::make('S3gur1d4d?W3b'),
-            'telefono' => '+34789456786',
-            'pais' => 'España',
+            'phone' => '+34789456786',
+            'country' => 'España',
             'iban' => 'ES7921000813610123456789',
             'created_at' => Date::now(),
             'updated_at' => Date::now()
