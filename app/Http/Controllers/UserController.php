@@ -48,28 +48,28 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = $request->validate([
-            'name' => 'required|min:2|max:20',
-            'surnames' => 'required|min:2|max:40|alpha',
+            'nombre' => 'required|min:2|max:20',
+            'apellidos' => 'required|min:2|max:40|alpha',
             'dni' => 'required|max:9',
             'email' => 'required|regex:/^.+@.+$/i|unique:users',
-            'password' => 'required:min:8|alpha_num',
-            'confirmPassword' => 'required|same:password',
-            'phone' => 'min:9|max:12|nullable',
-            'country' => 'alpha|nullable',
+            'contraseña' => 'required:min:8|alpha_num',
+            'confirmarContraseña' => 'required|same:contraseña',
+            'telefono' => 'min:9|max:12|nullable',
+            'pais' => 'alpha|nullable',
             'iban' => 'alpha_num|required',
-            'over_you' => 'min:20|max:250|alpha|nullable'
+            'sobreTi' => 'min:20|max:250|alpha|nullable'
         ]);
 
         $user = new User;
-        $user->name = $request->name;
-        $user->surnames = $request->surnames;
+        $user->name = $request->nombre;
+        $user->surnames = $request->apellidos;
         $user->dni = $request->dni;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->phone = $request->phone;
-        $user->country = $request->country;
+        $user->password = Hash::make($request->contraseña);
+        $user->phone = $request->telefono;
+        $user->country = $request->pais;
         $user->iban = $request->iban;
-        $user->over_you = $request->over_you;
+        $user->over_you = $request->sobreTi;
         $user->save();
 
         //return back();
