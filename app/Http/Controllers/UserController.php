@@ -47,26 +47,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = $request->validate([
             'name' => 'required|min:2|max:20',
             'surnames' => 'required|min:2|max:40|alpha',
             'dni' => 'required|max:9',
             'email' => 'required|regex:/^.+@.+$/i|unique:users',
             'password' => 'required:min:8|alpha_num',
             'confirmPassword' => 'required|same:password',
-            'phone' => 'min:9|max:12',
-            'country' => 'alpha',
-            'iban' => 'required',
-            'overYou' => 'min:20|max:250|alpha'
+            'phone' => 'min:9|max:12|nullable',
+            'country' => 'alpha|nullable',
+            'iban' => 'alpha_num|required',
+            'over_you' => 'min:20|max:250|alpha|nullable'
         ]);
 
-        if ($validator->fails()) {
-            return redirect('users/error')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
         $user = new User;
-        $user->name = $request->get('name');
+        $user->name = $request->name;
         $user->surnames = $request->surnames;
         $user->dni = $request->dni;
         $user->email = $request->email;
@@ -74,7 +69,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->country = $request->country;
         $user->iban = $request->iban;
-        $user->over_you = $request->overYou;
+        $user->over_you = $request->over_you;
         $user->save();
 
         //return back();
