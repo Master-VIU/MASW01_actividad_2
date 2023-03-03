@@ -19,12 +19,12 @@
             <h1>Registro usuarios</h1>
             <div class="form-group">
                 <label for="Nombre">Nombre:</label>
-                <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+                <input type="text" class="form-control" name="nombre" id="nombre" value="{{ old('nombre') }}">
             </div>
             <div class="form-group">
                 <label for="Apellidos">Apellidos:</label>
-                <input type="text" name="surnames" id="surnames" minlength="2" maxlength="40"
-                    value="{{ old('surnames') }}">
+                <input type="text" name="apellidos" id="apellidos" minlength="2" maxlength="40"
+                    value="{{ old('apellidos') }}">
             </div>
             <div class="form-group">
                 <label for="Dni">Dni:</label>
@@ -37,20 +37,20 @@
             </div>
             <div class="form-group">
                 <label for="Password">Contraseña:</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" name="contraseña" id="contraseña" required>
             </div>
             <div class="form-group">
                 <label for="Password">Confirmar contraseña:</label>
-                <input type="password" name="confirmPassword" id="confirmPassword" required>
+                <input type="password" name="confirmarContraseña" id="confirmarContraseña" required>
             </div>
             <div class="form-group">
                 <label for="Telefono">Telefono:</label>
-                <input type="tel" name="phone" id="phone" minlength="9" maxlength="12" pattern="[+]{1}[0-9]{11}"
-                    value="{{ old('phone') }}">
+                <input type="tel" name="telefono" id="telefono" minlength="9" maxlength="12" pattern="[+]{1}[0-9]{11}"
+                    value="{{ old('telefono') }}">
             </div>
             <div class="form-group">
                 <label for="Pais">País:</label>
-                <input type="text" name="country" id="country" value="{{ old('country') }}">
+                <input type="text" name="pais" id="pais" value="{{ old('pais') }}">
             </div>
             <div class="form-group">
                 <label for="Iban">Número de cuenta bancaria (IBAN):</label>
@@ -58,7 +58,7 @@
             </div>
             <div class="form-group">
                 <label for="SobreTi">Sobre ti:</label>
-                <input type="text" name="over_you" id="over_you" minlength="20" maxlength="250">
+                <input type="text" name="sobreTi" id="over_you" minlength="20" maxlength="250">
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
 
