@@ -21,3 +21,4 @@ Route::get('/', function () {
 
 Route::get('/registro', [UserController::class, 'create'])->name('users.create');
 Route::post('/store', [UserController::class, 'store'])->name('users.store');
+Route::get('/index', [UserController::class, 'index'])->name('users.index');
