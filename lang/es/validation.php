@@ -13,14 +13,27 @@ return [
     |
     */
 
-    'accepted' => 'El :attribute debe ser aceptado.',
+    'accepted' => 'El campo :attribute debe ser aceptado.',
     'alpha' => 'El campo :attribute solo debe contener letras.',
-    'alpha_num' => 'El :attribute solo debe contener letras y números.',
+    'alpha_num' => 'El campo :attribute solo debe contener letras y números.',
    
     
     'required' => 'El campo :attribute  es obligatorio.',
     'same' => 'El campo :attribute y el campo :other deben coincidir.',
-    'unique' => 'El :attribute ya ha sido registrado.',
+    'unique' => 'El campo :attribute ya ha sido registrado.',
+    'regex' => 'El formato  de :attribute no es válido.',
+    'max' => [
+        'numeric' => 'El campo :attribute no debe ser mayor que :max.',
+        'file' => 'El campo :attribute no debe ser mayor que :max kilobytes.',
+        'string' => 'El campo :attribute no debe ser mayor que :max caracteres.',
+        'array' => 'El campo :attribute no debe tener más de :max elementos.',
+    ],
+    'min' => [
+        'numeric' => 'El campo :attribute al menos debe ser :min.',
+        'file' => 'El campo :attribute debe tener al menos :min kilobytes.',
+        'string' => 'El campo :attribute debe tener al menos :min caracteres.',
+        'array' => 'El campo :attribute debe tener al menos :min elementos.',
+    ],
 
     /*
     |--------------------------------------------------------------------------
