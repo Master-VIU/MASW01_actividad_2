@@ -11,12 +11,6 @@ use Validator;
 class UserController extends Controller
 {
 
-    protected $users;
-
-    public function __construct(User $users)
-    {
-        $this->users = $users;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +18,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //users = $this->users->getUsers();
+        
         $users = User::all();
-        return response()->json($users);
+        //return view('index');
+       // dd(response()->json($users));
+        return view('users.index')->with('data', response()->json($users));
+        //return response()->json($users);
     }
 
     /**
@@ -47,16 +44,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $request->validate([
             'nombre' => 'required|min:2|max:20',
-            'apellidos' => 'required|min:2|max:40|alpha',
-            'dni' => 'required|max:9',
+            'apellidos' => 'required|min:2|max:40|regex:/^[\pL\s]+$/u',
+            'dni' => 'required|max:9|regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i',
             'email' => 'required|regex:/^.+@.+$/i|unique:users',
             'contraseña' => 'required:min:8|alpha_num',
             'confirmarContraseña' => 'required|same:contraseña',
             'telefono' => 'min:9|max:12|nullable',
             'pais' => 'alpha|nullable',
-            'iban' => 'alpha_num|required',
+            'iban' => 'alpha_num|min:24|max:30|required',
             'sobreTi' => 'min:20|max:250|alpha|nullable'
         ]);
 
@@ -73,7 +70,7 @@ class UserController extends Controller
         $user->save();
 
         //return back();
-        return redirect()->route('users.create')->with('success', 'Usuario creado correctamente');
+        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
     }
 
     /**
