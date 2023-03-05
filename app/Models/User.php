@@ -30,14 +30,4 @@ class User extends Model
         'iban'
     ];
 
-
-    public function getUsers()
-    {
-        return User::all();
-    }
-
-    public function getUserById($id)
-    {
-        return User::find($id);
-    }
 }
