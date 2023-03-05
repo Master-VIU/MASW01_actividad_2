@@ -1,70 +1,86 @@
 @section('title')
     REGISTRO
 @endsection
+@include('../layouts.head')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <h4>Por favor corregir los errores:</h4>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 @section('content')
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="container">
         <form action="{{ route('users.store') }}" method="post">
             @csrf
-            <h1>Registro usuarios</h1>
-            <div class="form-group">
-                <label for="Nombre">Nombre:</label>
-                <input type="text" class="form-control" name="nombre" id="nombre" value="{{ old('nombre') }}">
+            <h1>Registro de usuarios</h1>
+            <div class="col-md-3">
+                <label for="Nombre" class="form-label">Nombre:</label><br>
+                <input type="text" class="form-control" name="nombre" id="nombre" minlength="2" maxlength="20"
+                    value="{{ old('nombre') }}">
             </div>
-            <div class="form-group">
-                <label for="Apellidos">Apellidos:</label>
-                <input type="text" name="apellidos" id="apellidos" minlength="2" maxlength="40"
+            <div class="col-md-3">
+                <label for="Apellidos" class="form-label">Apellidos:</label><br>
+                <input type="text" class="form-control"name="apellidos" id="apellidos" minlength="2" maxlength="40"
                     value="{{ old('apellidos') }}">
             </div>
-            <div class="form-group">
-                <label for="Dni">Dni:</label>
-                <input type="text" name="dni" id="dni" minlength="9" maxlength="9"
-                    pattern="[0-9]{8}[A-Za-z]{1}" required value="{{ old('dni') }}">
+
+            <div class="col-md-3">
+                <label for="Dni" class="form-label">Dni:</label><br>
+                <input type="text" class="form-control"name="dni" id="dni" minlength="9" maxlength="9"
+                    value="{{ old('dni') }}">
             </div>
-            <div class="form-group">
-                <label for="Email">Email:</label>
-                <input type="email" name="email" id="email" required value="{{ old('email') }}">
+
+            <div class="col-md-3">
+                <label for="email" class="form-label">Email:</label><br>
+                <input type="email" class="form-control"name="email" id="email" value="{{ old('email') }}">
             </div>
-            <div class="form-group">
-                <label for="Password">Contraseña:</label>
-                <input type="password" name="contraseña" id="contraseña" required>
+
+            <div class="col-md-3">
+                <label for="Password" class="form-label">Contraseña:</label>
+                <input type="password" class="form-control"name="contraseña" id="contraseña" required>
             </div>
-            <div class="form-group">
-                <label for="Password">Confirmar contraseña:</label>
-                <input type="password" name="confirmarContraseña" id="confirmarContraseña" required>
+
+            <div class="col-md-3">
+                <label for="Password" class="form-label">Confirmar contraseña:</label>
+                <input type="password" class="form-control"name="confirmarContraseña" id="confirmarContraseña" required>
             </div>
-            <div class="form-group">
-                <label for="Telefono">Telefono:</label>
-                <input type="tel" name="telefono" id="telefono" minlength="9" maxlength="12" pattern="[+]{1}[0-9]{11}"
-                    value="{{ old('telefono') }}">
+
+            <div class="col-md-3">
+                <label for="Telefono" class="form-label">Teléfono:</label>
+                <input type="tel" class="form-control"name="telefono" id="telefono" minlength="9" maxlength="12"
+                    pattern="[+]{1}[0-9]{11}" value="{{ old('telefono') }}">
             </div>
-            <div class="form-group">
-                <label for="Pais">País:</label>
-                <input type="text" name="pais" id="pais" value="{{ old('pais') }}">
+
+            <div class="col-md-3">
+                <label for="Pais" class="form-label">País:</label>
+                <input type="text" class="form-control"name="pais" id="pais" minlength="9"
+                    value="{{ old('pais') }}">
             </div>
-            <div class="form-group">
-                <label for="Iban">Número de cuenta bancaria (IBAN):</label>
-                <input type="text" name="iban" id="iban" required value="{{ old('iban') }}">
+
+            <div class="col-md-8">
+                <label for="iban" class="form-label">Número cuenta bancaria (IBAN):</label>
+                <input type="text" class="form-control"name="iban" id="iban" required
+                    value="{{ old('iban') }}">
             </div>
-            <div class="form-group">
-                <label for="SobreTi">Sobre ti:</label>
-                <input type="text" name="sobreTi" id="over_you" minlength="20" maxlength="250">
+
+            <div class="col-md-12">
+                <label for="sobreTi">Sobre ti:</label>
+                <textarea class="form-control" name="sobreTi" id="sobreTi" minlength="20" maxlength="250"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <br>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="">
+                    <input type="button" class="btn btn-secondary" value="Volver al login">
+                </a>
+            </div>
 
         </form>
-
-        <p>
-            <a href="">Volver al login</a>
-        </p>
     </div>
+
+    @include('../layouts.footer')
