@@ -18,11 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+
         $users = User::all();
-       $data = json_decode($users);
-       return view('users.index', ['data' => $data]);
-        
+        $data = json_decode($users);
+        return view('users.index', ['data' => $data]);
+
     }
 
     /**
@@ -114,6 +114,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
