@@ -20,10 +20,9 @@ class UserController extends Controller
     {
         
         $users = User::all();
-        //return view('index');
-       // dd(response()->json($users));
-        return view('users.index')->with('data', response()->json($users));
-        //return response()->json($users);
+       $data = json_decode($users);
+       return view('users.index', ['data' => $data]);
+        
     }
 
     /**
