@@ -1,6 +1,7 @@
 .container{
     
     margin-left: 200pt;
+    padding-left: 100pt;
 }
 
 h1 {
@@ -9,4 +10,8 @@ h1 {
 
 #footer {
     text-align: center;
+}
+
+.container-table{
+    padding: 40px 100px;
 }
