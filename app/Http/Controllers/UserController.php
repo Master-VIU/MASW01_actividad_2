@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rules\Password;
 use Validator;
 
@@ -21,6 +23,7 @@ class UserController extends Controller
 
         $users = User::all();
         $data = json_decode($users);
+
         return view('users.index', ['data' => $data]);
 
     }
@@ -68,8 +71,7 @@ class UserController extends Controller
         $user->over_you = $request->sobreTi;
         $user->save();
 
-        //return back();
-        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente');
+        return Redirect::to('users/index')->with('success', 'El usuario ha sido creado correctamente.');
     }
 
     /**
@@ -80,7 +82,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.index', $user);
     }
 
     /**
@@ -91,7 +94,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        // return view('users/edit', ['user' => $user]);
+        return View::make('users.edit')->with('user', $user);
     }
 
     /**
@@ -103,7 +108,24 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $user = User::findOrFail($id);
+        $user->name = $request->nombre;
+        $user->surnames = $request->apellidos;
+        $user->dni = $request->dni;
+        $user->email = $request->email;
+        $user->phone = $request->telefono;
+        $user->country = $request->pais;
+        $user->iban = $request->iban;
+        $user->over_you = $request->sobreTi;
+        $changes = $user->getDirty();
+        $user->save();
+        if ($changes) {
+            return Redirect::to('users/index')->with('success', 'El usuario ha sido modificado correctamente.');
+        }
+        return Redirect::to('users/index')->with('warning', 'No se han actualizado datos.');
+
+
     }
 
     /**
@@ -114,6 +136,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        $user = User::findOrFail($id);
+        $user->delete();
+        return Redirect::to('users/index')->with('warning', 'El usuario ha sido eliminado correctamente.');
     }
 }
