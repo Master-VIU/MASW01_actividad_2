@@ -49,7 +49,7 @@
             @endforeach
     </table>
 @else
-    <p class="no-registro">No hay usuarios registrados</p>
+    <p class="no-registro">No hay usuarios registrados.</p>
     @endif
 </div>
 
