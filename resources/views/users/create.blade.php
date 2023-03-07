@@ -4,7 +4,7 @@
 @include('../layouts.head')
 @if ($errors->any())
     <div class="alert alert-danger">
-        <h4>Por favor corregir los errores:</h4>
+        <strong>Por favor corregir los errores:</strong>
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -75,7 +75,7 @@
             <br>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="">
+                <a href="{{ route('users.index') }}">
                     <input type="button" class="btn btn-secondary" value="Volver al login">
                 </a>
             </div>
