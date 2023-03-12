@@ -2,32 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
 
-    //protected $table = 'users';
-
-    protected $primaryKey = "user_id";
+    protected $table = 'users';
 
     protected $fillable = [
-        'user_id',
         'name',
         'surnames',
         'dni',
         'email',
         'phone',
         'country',
-        'over_you'
+        'over_you',
+        'iban'
     ];
 
     protected $hidden = [
         'password',
-        'iban'
+        'remember_token',
     ];
 
 }
