@@ -4,4 +4,25 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <title>SuperPc : : Usuarios</title>    
     <link rel="shortcut icon" href="{{ asset('img/icon.png')}}">
+
+    
+@if (Session::has('success'))
+<div class="alert alert-success">
+    <p class="">{{ Session::get('success') }} </p>
+</div>
+@elseif(Session::has('danger'))
+<div class="alert alert-danger">
+    <p class="">{{ Session::get('danger') }} </p>
+</div>
+@endif
 </head>
+
+@auth
+<nav class="logout">
+    <a href="{{ route('users.logout') }}">
+       Cerrar sesión
+    </a>
+</nav>
+    
+@endauth
+
