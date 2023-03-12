@@ -56,7 +56,7 @@ class UserController extends Controller
             'telefono' => 'min:9|max:12|nullable',
             'pais' => 'alpha|nullable',
             'iban' => 'alpha_num|min:24|max:30|required',
-            'sobreTi' => 'min:20|max:250|alpha|nullable'
+            'sobreTi' => 'min:20|max:250|nullable|alpha'
         ]);
 
         $user = new User;
@@ -71,7 +71,7 @@ class UserController extends Controller
         $user->over_you = $request->sobreTi;
         $user->save();
 
-        return Redirect::to('users/index')->with('success', 'El usuario ha sido creado correctamente.');
+        return Redirect::to('users/login')->with('success', 'El usuario ha sido creado correctamente.');
     }
 
     /**
@@ -95,7 +95,6 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        // return view('users/edit', ['user' => $user]);
         return View::make('users.edit')->with('user', $user);
     }
 
@@ -123,21 +122,9 @@ class UserController extends Controller
         if ($changes) {
             return Redirect::to('users/index')->with('success', 'El usuario ha sido modificado correctamente.');
         }
-        return Redirect::to('users/index')->with('warning', 'No se han actualizado datos.');
+        return Redirect::to('users/index')->with('danger', 'No se han actualizado datos.');
 
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return Redirect::to('users/index')->with('warning', 'El usuario ha sido eliminado correctamente.');
-    }
 }
