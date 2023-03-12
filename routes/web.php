@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,15 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*Route::controller(UserController::class)->group(function() {
-    Route::get('/index', 'index');
-    Route::get('/registro', 'create');
-    Route::post('/store', 'store');
-});*/
-Route::get('/registro', [UserController::class, 'create'])->name('users.create');
-Route::post('/store', [UserController::class, 'store'])->name('users.store');
-Route::get('/index', [UserController::class, 'index'])->name('users.index');
-Route::delete('/index/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::get('/{id}/editar', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/{id}/update', [UserController::class, 'update'])->name('users.update');
-    
+Route::controller(UserController::class)->group (function () {
+    Route::get('/index', 'index')->name('users.index')->middleware('auth');
+    Route::post('/store', 'store')->name('users.store');
+    Route::get('/register', 'create')->name('users.create')->middleware('guest');
+    Route::get('/{id}/edit', 'edit')->name('users.edit')->middleware('auth');
+    Route::put('/{id}/update', 'update')->name('users.update')->middleware('auth');
+});
+
+Route::controller(AuthController::class)->group(function() {
+    Route::get('/login', 'login')->middleware('guest')->name('login')->middleware('guest')->middleware(['throttle:users']);
+    Route::post('/authenticate', 'authenticate')->name('users.authenticate');
+    Route::get('/logout', 'logout')->name('users.logout')->middleware('auth');
+
+});
