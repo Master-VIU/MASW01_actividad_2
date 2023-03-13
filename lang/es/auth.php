@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Credenciales incorrectas.',
+    'failed' => 'Credenciales no válidas. Vuelve a intentarlo.',
     'succesful' => 'Sesión cerrada con exito.',
     'throttle' => 'Demasiados intentos de inicio de sesión. Vuelva a intentarlo en más tarde.',
 
