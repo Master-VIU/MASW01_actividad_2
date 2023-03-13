@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestEditValidate;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-use Illuminate\Validation\Rules\Password;
-use Validator;
 
 class UserController extends Controller
 {
@@ -28,65 +25,7 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('users.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|min:2|max:20',
-            'apellidos' => 'required|min:2|max:40|regex:/^[\pL\s]+$/u',
-            'dni' => 'required|max:9|regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i',
-            'email' => 'required|regex:/^.+@.+$/i|unique:users',
-            'contraseña' => 'required:min:8|alpha_num',
-            'confirmarContraseña' => 'required|same:contraseña',
-            'telefono' => 'min:9|max:12|nullable',
-            'pais' => 'alpha|nullable',
-            'iban' => 'alpha_num|min:24|max:30|required',
-            'sobreTi' => 'min:20|max:250|nullable|alpha'
-        ]);
-
-        $user = new User;
-        $user->name = $request->nombre;
-        $user->surnames = $request->apellidos;
-        $user->dni = $request->dni;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->contraseña);
-        $user->phone = $request->telefono;
-        $user->country = $request->pais;
-        $user->iban = $request->iban;
-        $user->over_you = $request->sobreTi;
-        $user->save();
-
-        return Redirect::to('users/login')->with('success', 'El usuario ha sido creado correctamente.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::findOrFail($id);
-        return view('users.index', $user);
-    }
-
-    /**
+       /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -105,17 +44,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RequestEditValidate $request, $id)
     {
+        $request->validated();
 
         $user = User::findOrFail($id);
-        $user->name = $request->nombre;
-        $user->surnames = $request->apellidos;
-        $user->dni = $request->dni;
+        $user->name = strtoupper($request->nombre);
+        $user->surnames = strtoupper($request->apellidos);
+        $user->dni = strtoupper($request->dni);
         $user->email = $request->email;
         $user->phone = $request->telefono;
         $user->country = $request->pais;
-        $user->iban = $request->iban;
+        $user->iban = strtoupper($request->iban);
         $user->over_you = $request->sobreTi;
         $changes = $user->getDirty();
         $user->save();
