@@ -20,15 +20,15 @@ Route::get('/', function () {
 
 Route::controller(UserController::class)->group (function () {
     Route::get('/index', 'index')->name('users.index')->middleware('auth');
-    Route::post('/store', 'store')->name('users.store');
-    Route::get('/register', 'create')->name('users.create')->middleware('guest');
     Route::get('/{id}/edit', 'edit')->name('users.edit')->middleware('auth');
     Route::put('/{id}/update', 'update')->name('users.update')->middleware('auth');
 });
 
 Route::controller(AuthController::class)->group(function() {
+    Route::post('/store', 'store')->name('users.store');
+    Route::get('/register', 'create')->name('users.create')->middleware('guest');
     Route::get('/login', 'login')->middleware('guest')->name('login')->middleware('guest')->middleware(['throttle:users']);
     Route::post('/authenticate', 'authenticate')->name('users.authenticate');
-    Route::get('/logout', 'logout')->name('users.logout')->middleware('auth');
+    Route::post('/logout', 'logout')->name('users.logout')->middleware('auth');
 
 });
