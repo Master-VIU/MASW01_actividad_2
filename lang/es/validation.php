@@ -34,6 +34,12 @@ return [
         'string' => 'El campo :attribute debe tener al menos :min caracteres.',
         'array' => 'El campo :attribute debe tener al menos :min elementos.',
     ],
+    'size' => [
+        'numeric' => 'El campo :attribute debe ser :size.',
+        'file' => 'El campo :attribute debe ser :size kilobytes.',
+        'string' => 'El campo :attribute debe ser  :size de tamaño.',
+        'array' => 'El campo :attribute debe contener :size elementos de tamaño.',
+    ],
 
     /*
     |--------------------------------------------------------------------------
