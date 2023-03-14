@@ -21,7 +21,7 @@ class RequestEditValidate extends FormRequest
             'telefono' => 'min:9|max:12|nullable',
             'pais' => 'alpha|nullable',
             'iban' => 'alpha_num|min:24|max:30|required|regex:/^[A-Za-z]{2}[0-9]{22}+$/u',
-            'sobreTi' => 'min:20|max:250|nullable|regex:/[A-Za-z0-9-,.]+/',
+            'sobreTi' => 'min:20|max:250|nullable|regex:/^[A-Za-z0-9,.]+/',
         ];
     }
 }
