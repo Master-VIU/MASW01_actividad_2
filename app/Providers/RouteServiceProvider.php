@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -59,8 +60,22 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for ('users', function (Request $request) {
             return Limit::perMinute(10)->response(function () {
-                return response(__('auth.throttle'), 429);
-            });
+                return response()->json([
+                            "code:" => "001",
+                            "message" => __('auth.throttle')], 429
+                    );
+                }
+            );
+        });
+
+        RateLimiter::for ('api', function (Request $request) {
+            return Limit::perMinute(10)->response(function () {
+                return response()->json([
+                            "code:" => "001",
+                            "message" => __('auth.throttle')], 429
+                    );
+                }
+            );
         });
     }
 }
