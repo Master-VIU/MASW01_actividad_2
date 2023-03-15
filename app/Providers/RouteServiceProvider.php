@@ -61,8 +61,9 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for ('users', function (Request $request) {
             return Limit::perMinute(10)->response(function () {
                 return response()->json([
-                            "code:" => "001",
-                            "message" => __('auth.throttle')], 429
+                            "code:" => "429",
+                            "message" => __('auth.throttle')], 
+                            Response::HTTP_TOO_MANY_REQUESTS
                     );
                 }
             );
@@ -71,8 +72,9 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for ('api', function (Request $request) {
             return Limit::perMinute(10)->response(function () {
                 return response()->json([
-                            "code:" => "001",
-                            "message" => __('auth.throttle')], 429
+                            "code:" => "429",
+                            "message" => __('auth.throttle')], 
+                            Response::HTTP_TOO_MANY_REQUESTS
                     );
                 }
             );
