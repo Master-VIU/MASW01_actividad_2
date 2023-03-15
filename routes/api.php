@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthControllerApi;
 
@@ -15,11 +14,14 @@ use App\Http\Controllers\Api\AuthControllerApi;
 |
 */
 
-Route::middleware('guest')->group(function () {
-    Route::post('register', [AuthControllerApi::class, 'register']);
-    Route::post('login', [AuthControllerApi::class, 'login']);
+const AUTH = 'auth:sanctum';
+const GUEST = 'guest';
+
+Route::middleware(GUEST)->controller(AuthControllerApi::class)->group (function () {
+    Route::post('register','register');
+    Route::post('login', 'login');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('users', [AuthControllerApi::class, 'usersList']);
+Route::middleware(AUTH)->controller(AuthControllerApi::class)->group (function () {
+    Route::get('users', 'usersList');
 });
