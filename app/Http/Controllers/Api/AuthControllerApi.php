@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RequestValidateApi;
+use App\Http\Requests\Api\RequestValidateApi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
-use Laravel\Sanctum\NewAccessToken;
 
 class AuthControllerApi extends Controller
 {
@@ -29,8 +28,11 @@ class AuthControllerApi extends Controller
         $user->over_you = $request->sobreTi;
         $user->save();
         $user->createToken('auth_token')->plainTextToken;
-        return response()->json(["message" => "El usuario ha sido creado correctamente.",
-        "user" => $user]);
+        return response()->json([
+            'code' => "201", 
+            "message" => "El usuario ha sido creado correctamente.",
+            "user" => $user
+        ], Response::HTTP_CREATED);
     }
 
     public function login(Request $request)
@@ -42,8 +44,9 @@ class AuthControllerApi extends Controller
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'message' =>  __('auth.failed')
-            ], 401);
+                'code' => "401", 
+                'message' => __('auth.failed')
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
@@ -51,22 +54,24 @@ class AuthControllerApi extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'access_token' => $token,
+            'code' => "200",
             'token_type' => 'Bearer',
+            'access_token' => $token,            
             'message' => 'Usuario logueado con éxito.'
-        ]);
+        ], Response::HTTP_OK);
     }
 
 
 
     public function usersList(Request $request)
     {
-        
+
         $user = User::all();
         return response()->json([
+            'code' => '200',
             "users" => "OK",
             "data" => $user
         ], Response::HTTP_OK);
     }
-    
+
 }
