@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RequestValidateApi;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,7 @@ class AuthControllerApi extends Controller
         $user->save();
         $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'code' => "201", 
+            'code' => RouteServiceProvider::CREATED, 
             "message" => "El usuario ha sido creado correctamente.",
             "user" => $user
         ], Response::HTTP_CREATED);
@@ -54,24 +55,12 @@ class AuthControllerApi extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'code' => "200",
+            'code' => RouteServiceProvider::OK,
             'token_type' => 'Bearer',
             'access_token' => $token,            
             'message' => 'Usuario logueado con éxito.'
         ], Response::HTTP_OK);
     }
 
-
-
-    public function usersList(Request $request)
-    {
-
-        $user = User::all();
-        return response()->json([
-            'code' => '200',
-            "users" => "OK",
-            "data" => $user
-        ], Response::HTTP_OK);
-    }
 
 }
