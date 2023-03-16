@@ -19,6 +19,17 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/users/index';
+    public const MESSAGE = 'message';
+    public const CODE = 'code';
+    public const DATA = 'data';
+
+    public const OK = '200';
+
+    public const ERROR = '001';
+
+    public const INFO = '002';
+
+    public const CREATED = '201';
 
     /**
      * The controller namespace for the application.
@@ -59,22 +70,28 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for ('users', function (Request $request) {
-            return Limit::perMinute(10)->response(function () {
-                return response()->json([
+            return Limit::perMinute(10)->response(
+                function () {
+                    return response()->json(
+                        [
                             "code:" => "429",
-                            "message" => __('auth.throttle')], 
-                            Response::HTTP_TOO_MANY_REQUESTS
+                            "message" => __('auth.throttle')
+                        ],
+                        Response::HTTP_TOO_MANY_REQUESTS
                     );
                 }
             );
         });
 
         RateLimiter::for ('api', function (Request $request) {
-            return Limit::perMinute(10)->response(function () {
-                return response()->json([
+            return Limit::perMinute(10)->response(
+                function () {
+                    return response()->json(
+                        [
                             "code:" => "429",
-                            "message" => __('auth.throttle')], 
-                            Response::HTTP_TOO_MANY_REQUESTS
+                            "message" => __('auth.throttle')
+                        ],
+                        Response::HTTP_TOO_MANY_REQUESTS
                     );
                 }
             );
