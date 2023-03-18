@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RequestValidateApi;
+use App\Http\Requests\Api\RquestValidationLogin;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -30,23 +31,20 @@ class AuthControllerApi extends Controller
         $user->save();
         $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'code' => RouteServiceProvider::CREATED, 
-            "message" => "El usuario ha sido creado correctamente.",
+            RouteServiceProvider::CODE => RouteServiceProvider::CREATED, 
+            RouteServiceProvider::MESSAGE => "El usuario ha sido creado correctamente.",
             "user" => $user
         ], Response::HTTP_CREATED);
     }
 
-    public function login(Request $request)
+    public function login(RquestValidationLogin $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validated();
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'code' => "401", 
-                'message' => __('auth.failed')
+                RouteServiceProvider::CODE => "401", 
+                RouteServiceProvider::MESSAGE => __('auth.failed')
             ], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -55,12 +53,10 @@ class AuthControllerApi extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'code' => RouteServiceProvider::OK,
+            RouteServiceProvider::CODE => RouteServiceProvider::OK,
             'token_type' => 'Bearer',
             'access_token' => $token,            
-            'message' => 'Usuario logueado con éxito.'
+            RouteServiceProvider::MESSAGE => 'Usuario logueado con éxito.'
         ], Response::HTTP_OK);
     }
-
-
 }
