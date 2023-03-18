@@ -17,21 +17,16 @@ use App\Http\Controllers\Api\UserControllerApi;
 
 const AUTH = 'auth:sanctum';
 const GUEST = 'guest';
-const MESSAGE = 'message';
-const CODE = 'code';
-const DATA = 'data';
 
-Route::middleware(GUEST)->controller(AuthControllerApi::class)->group (function () {
+
+Route::middleware(GUEST)->prefix('api')->controller(AuthControllerApi::class)->group (function () {
     Route::post('register','register');
     Route::post('login', 'login');
 });
 
-// Route::middleware(AUTH)->controller(AuthControllerApi::class)->group (function () {
-//     Route::get('users', 'usersList');
-// });
 
-Route::middleware(AUTH)->controller(UserControllerApi::class)->group (function () {
+Route::middleware(AUTH)->prefix('api')->controller(UserControllerApi::class)->group (function () {
     Route::get('users', 'usersList');
-    Route::put('/{id}', 'update');
-    Route::post('/{id}', 'destroy');
+    Route::put('/{id}', 'update')->where(['id'=> '[0-9]+']);
+    Route::post('/{id}', 'destroy')->where(['id'=> '[0-9]+']);
 });
