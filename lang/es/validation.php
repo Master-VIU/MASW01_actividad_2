@@ -41,6 +41,8 @@ return [
         'array' => 'El campo :attribute debe contener :size elementos de tamaño.',
     ],
 
+    'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
