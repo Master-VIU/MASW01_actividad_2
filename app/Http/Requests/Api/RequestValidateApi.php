@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Providers\RouteServiceProvider;
+use App\Rules\ContrasenaFuerte;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,17 +24,11 @@ class RequestValidateApi extends FormRequest
             'apellidos' => 'required|min:2|max:40|regex:/^[\pL\s]+$/u',
             'dni' => 'required|max:9|unique:users|regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i',
             'email' => 'required|email|unique:users',
-            'contraseña' => ['required',
-            Password::min(8)
-            ->mixedCase()
-            ->letters()
-            ->numbers()
-            ->symbols(),
-    ],
+            'contraseña' => ['required', Password::min(8), new ContrasenaFuerte()],
             'confirmarContraseña' => 'required|same:contraseña',
-            'telefono' => 'min:9|max:12|nullable|regex:/^[+]{1}[0-9]/',
+            'telefono' => 'min:9|max:12|nullable|regex:/^[+]{1}[0-9,+]*$/',
             'pais' => 'alpha|nullable',
-            'iban' => 'alpha_num|min:24|max:30|required|regex:/^[A-Za-z]{2}[0-9]{22}+$/u',
+            'iban' => 'alpha_num|min:24|required|regex:/^[A-Za-z]{2}[0-9]{22}+$/u',
             'sobreTi' => 'min:20|max:250|nullable|regex:/^[A-Za-z0-9,.]+/',
 
         ];
@@ -42,8 +38,8 @@ class RequestValidateApi extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'code' => '422',
-            'message' =>$validator->errors(),
+            RouteServiceProvider::CODE => '422',
+            RouteServiceProvider::MESSAGE =>$validator->errors(),
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
