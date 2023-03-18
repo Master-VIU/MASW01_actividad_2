@@ -15,6 +15,6 @@ return [
 
     'failed' => 'Credenciales no válidas. Vuelve a intentarlo.',
     'succesful' => 'Sesión cerrada con exito.',
-    'throttle' => 'Demasiados intentos de inicio de sesion. Vuelva a intentarlo mas tarde.',
+    'throttle' => 'Demasiados intentos. Vuelve a intentarlo mas tarde.',
 
 ];
