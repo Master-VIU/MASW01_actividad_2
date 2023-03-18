@@ -50,12 +50,12 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::prefix('api')
+            Route::prefix('')
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
-            Route::prefix('users')
+            Route::prefix('')
                 ->middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
@@ -74,8 +74,8 @@ class RouteServiceProvider extends ServiceProvider
                 function () {
                     return response()->json(
                         [
-                            "code:" => "429",
-                            "message" => __('auth.throttle')
+                            RouteServiceProvider::CODE => "429",
+                            RouteServiceProvider::MESSAGE => __('auth.throttle')
                         ],
                         Response::HTTP_TOO_MANY_REQUESTS
                     );
@@ -88,8 +88,8 @@ class RouteServiceProvider extends ServiceProvider
                 function () {
                     return response()->json(
                         [
-                            "code:" => "429",
-                            "message" => __('auth.throttle')
+                            RouteServiceProvider::CODE => "429",
+                            RouteServiceProvider::MESSAGE => __('auth.throttle')
                         ],
                         Response::HTTP_TOO_MANY_REQUESTS
                     );
