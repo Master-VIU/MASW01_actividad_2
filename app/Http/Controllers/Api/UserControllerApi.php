@@ -22,7 +22,11 @@ class UserControllerApi extends Controller
 
         $user = User::all();
         $totalUsers = $user->count();
-        return response()->json([CODE => RouteServiceProvider::OK, 'total_users' => $totalUsers, DATA => $user], Response::HTTP_OK);
+        return response()->json([
+            RouteServiceProvider::CODE => RouteServiceProvider::OK,
+            'all_users' => $totalUsers,
+            RouteServiceProvider::DATA => $user
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -51,20 +55,26 @@ class UserControllerApi extends Controller
             $user->save();
             if ($changes) {
                 return response()->json([
-                    CODE => RouteServiceProvider::OK,
-                    MESSAGE => "Usuario actualizado con exito",
-                    DATA => $user
+                    RouteServiceProvider::CODE => RouteServiceProvider::OK,
+                    RouteServiceProvider::MESSAGE => "Usuario actualizado con exito",
+                    RouteServiceProvider::DATA => $user
                 ], Response::HTTP_OK);
             }
 
         } catch (Throwable $e) {
             return response()->json([
-                CODE => RouteServiceProvider::ERROR,
-                MESSAGE => 'Error, al intentar actualizar el usuario'
+                RouteServiceProvider::CODE => RouteServiceProvider::ERROR,
+                RouteServiceProvider::MESSAGE => 'Error, al intentar actualizar el usuario'
             ], Response::HTTP_OK);
         }
 
-        return response()->json([CODE => RouteServiceProvider::INFO, MESSAGE => 'No se realizaron cambios en el usuario'], Response::HTTP_OK);
+        return response()->json(
+            [
+                RouteServiceProvider::CODE => RouteServiceProvider::INFO,
+                RouteServiceProvider::MESSAGE => 'No se realizaron cambios en el usuario'
+            ],
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -75,11 +85,17 @@ class UserControllerApi extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if($user == null){
+            return response()->json([
+                RouteServiceProvider::CODE => RouteServiceProvider::ERROR,
+                RouteServiceProvider::MESSAGE => 'El usuario no existe en bbdd.'
+            ], Response::HTTP_NOT_FOUND);
+        }
         $user->delete();
         return response()->json([
-            CODE => RouteServiceProvider::OK,
-            MESSAGE => 'Usuario eliminado con exito!'
+            RouteServiceProvider::CODE => RouteServiceProvider::OK,
+            RouteServiceProvider::MESSAGE => 'Usuario eliminado con exito!'
         ], Response::HTTP_OK);
     }
 }
