@@ -28,16 +28,16 @@ DB_DATABASE=test
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
-Para conectar a la base de datos se debe configurar el archivo .env, pero ese archivo no viene incluido en el .zip, asi que debe generarlo. Hay dos opciones para crearlo.
-*   Puede copiar y pegar el **.env.example** que viene en el .zip en la base del proyecto, cambiarle el nombre a **.env**.
-*   Cambie los datos de conexiòn por los datos de la base de datos que creo en el punto anterior. Importante: Colocar el nombre de la DATABASE, el USERNAME y la PASSWORD de su entorno LOCAL, luego ejecutar el siguiente comando:
+Para conectar a la base de datos se debe configurar el archivo .env, pero ese archivo no viene incluido en el .zip, asi que se debe generar. Hay dos opciones para crearlo.
+*   Se puede copiar y pegar el **.env.example** que viene en el .zip en la base del proyecto y cambiar el nombre a **.env**.
+*   Se cambian los datos de conexión por los datos de la base de datos que se creó en el punto anterior. Importante: Colocar el nombre de la DATABASE, el USERNAME y la PASSWORD del entorno LOCAL, luego ejecutar el siguiente comando:
 
 ```sh
 php artisan key:generate
 ```
 * O bien, puede seguir estos pasos:
 1. Cree un archivo **.env** en el proyecto base
-2. Copie el contenido de [.env.example](https://github.com/laravel/laravel/blob/master/.env.example/ ".ev")
+2. Copie el contenido de [.env.example](https://github.com/laravel/laravel/blob/master/.env.example/)
 3. Péguelo en su archivo **.env**
 4. Cambie los datos de conexiòn por los datos de la base de datos que creo en el punto anterior
 5. Coloque el **USERNAME** y la **PASSWORD** de acceso a la bbdd creada en su entorno local para la conexion a bbdd.
@@ -60,7 +60,6 @@ Si se tiene instalado docker, es tan sencillo como ejecutar un comando como el s
 ```bash
 docker run -d -p 3306:3306 --name test2 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test mysql
 ```
-
 
 
 - Ejecutar las migraciones
