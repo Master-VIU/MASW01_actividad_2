@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\RequestValidationLogin;
 use App\Http\Requests\Web\RequestValidate;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -53,12 +54,9 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(RequestValidationLogin $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validated();
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
