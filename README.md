@@ -58,7 +58,7 @@ DB_PASSWORD=root
 
 Si se tiene instalado docker, es tan sencillo como ejecutar un comando como el siguiente en una terminal para crear la base de datos localmente. Habra que tener en cuenta que los puertos no colisionen con cualquier otra maquina que se este ejecutando localmente.
 ```bash
-docker run -d -p 3306:3306 --name test2 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test mysql
+docker run -d -p 3306:3306 --name MASW01_actividad_2_container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=test mysql
 ```
 
 
