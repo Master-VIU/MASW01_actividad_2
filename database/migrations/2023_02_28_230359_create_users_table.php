@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('name', 20)->nullable(false);
             $table->string('surnames', 40)->nullable(false);
             $table->string('dni', 9)->nullable(false)->unique();
-            $table->string('email')->nullable(false)->unique();
-            $table->string('password')->nullable(false);
+            $table->string('email', 100)->nullable(false)->unique();
+            $table->string('password', 100)->nullable(false);
             $table->string('phone', 12)->nullable();
-            $table->string('country')->nullable();
-            $table->string('iban')->nullable(false);
+            $table->string('country', 50)->nullable();
+            $table->string('iban', 50)->nullable(false);
             $table->string('over_you', 250)->nullable();
             $table->timestamps();
             $table->softDeletes();
