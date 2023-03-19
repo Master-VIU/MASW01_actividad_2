@@ -29,7 +29,8 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 Para conectar a la base de datos se debe configurar el archivo .env, pero ese archivo no viene incluido en el .zip, asi que debe generarlo. Hay dos opciones para crearlo.
-*   Puede copiar y pegar el **.env.example** que viene en el .zip en la base del proyecto y cambiarle el nombre a **.env**, luego ejecutar el siguiente comando:
+*   Puede copiar y pegar el **.env.example** que viene en el .zip en la base del proyecto, cambiarle el nombre a **.env**, y cambiar las crendeciales de conexiòn a la bbdd, luego ejecutar el siguiente comando:
+
 ```sh
 php artisan key:generate
 ```
