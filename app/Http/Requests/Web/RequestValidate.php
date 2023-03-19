@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web;
 
+use App\Rules\ContrasenaFuerte;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 class RequestValidate extends FormRequest
@@ -19,13 +20,7 @@ class RequestValidate extends FormRequest
             'apellidos' => 'required|min:2|max:40|regex:/^[\pL\s]+$/u',
             'dni' => 'required|max:9|regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i',
             'email' => 'required|email|unique:users',
-            'contraseña' => ['required',
-            Password::min(8)
-            ->mixedCase()
-            ->letters()
-            ->numbers()
-            ->symbols(),
-    ],
+            'contraseña' => ['required', Password::min(8), new ContrasenaFuerte()],
             'confirmarContraseña' => 'required|same:contraseña',
             'telefono' => 'min:9|max:12|nullable|regex:/^[+]{1}[0-9]/',
             'pais' => 'alpha|nullable',
