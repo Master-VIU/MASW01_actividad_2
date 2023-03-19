@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RequestValidateApi;
-use App\Http\Requests\Api\RquestValidationLogin;
+use App\Http\Requests\Api\RequestValidationLogin;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +36,7 @@ class AuthControllerApi extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function login(RquestValidationLogin $request)
+    public function login(RequestValidationLogin $request)
     {
         $credentials = $request->validated();
 
